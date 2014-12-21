@@ -1,0 +1,74 @@
+public class Node {
+    int value;
+    Node next;
+    
+    public Node(int val)
+    {
+        value = val;
+        next = null ;
+    }
+       
+  
+    public void insertNode(int val)
+    {
+     
+        Node n = this ;
+        Node end = new Node(val);
+        while(n.next != null)
+        {
+            n = n.next;
+        }
+        n.next = end;
+    }
+    public Node DeleteNode(int val)
+    {
+        Node temp = this;
+        Node n = this;
+        if(n.value == val)
+        {
+            n = n.next;
+            return n;
+        }
+        else
+        {
+            while(n.next.value != val)
+            {
+                n = n.next;
+            }
+            n.next = n.next.next;
+            return temp;
+        }
+        
+        
+    }
+    public void display()
+    {
+        Node n = this;
+        while(n != null)
+        {
+            System.out.println(n.value);
+            n= n.next;
+        }
+        System.out.println("Display");
+        
+    }
+        
+    
+    
+}
+
+// CALLING FILE
+public static void main(String[] args) {
+        // TODO code application logic here
+        Node a = new Node(2);
+        a.insertNode(4);
+        a.insertNode(5);
+        a.insertNode(6);
+        a.insertNode(7);
+        a.display();
+        a=a.DeleteNode(6);
+        a.display();
+        
+        
+        
+    }
