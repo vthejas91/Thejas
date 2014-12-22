@@ -1,0 +1,19 @@
+public void del_m(int n)
+    {
+        Node t = this;
+        for(int i=0;i<n;i++)
+        {
+            t=t.next;
+        }
+        Node temp =t.next;
+        while(temp.next.next!=null)
+        {
+            t.value = t.next.value;
+            t.next = t.next.next;
+            t=temp;
+            temp = temp.next;
+        }
+        t.next=null;
+        
+        
+    }
