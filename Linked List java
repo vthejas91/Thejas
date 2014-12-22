@@ -41,6 +41,39 @@ public class Node {
         
         
     }
+    public void disp_n(int n)
+    {
+        Node t = this;
+        if(t == null)
+        {
+            System.out.println("List is empty");
+        }
+        else
+        {
+            Node last = t;
+            for(int i=0;i<n;i++)
+            {
+                last = last.next;
+                if(last==null)
+                    break;
+            }
+            if(last == null)
+            {
+                System.out.println("Elements not available");
+            }
+            else
+            {
+                while(last!=null)
+                {
+                    last = last.next;
+                    t=t.next;
+                }
+                System.out.println(t.value);
+            }
+            
+            
+        }
+    }
     public void display()
     {
         Node n = this;
