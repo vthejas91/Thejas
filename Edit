@@ -17,3 +17,46 @@ public void del_m(int n)
         
         
     }
+    
+    public void sort()
+    {
+        Node n = this;
+        Node t = n.next;
+        int low;
+        while(n!=null)
+          {   low = n.value;
+            while(t!=null)
+            {
+                if(low>t.value)
+                {
+                    low = t.value;
+                }
+            t=t.next;
+            }
+        n=n.next;
+        }
+    }
+    
+     public Node corrupt()
+    {
+        Node t = this;
+        Node d = t.next;
+        
+        while(t!=null)
+        {
+            while(d!=null)
+            {                
+                if(d.value==t.value && d.next==t.next)
+                {
+                    return t;
+                }
+                d=d.next;
+            }
+            
+            
+            t=t.next;
+        }
+        
+        
+        return t;
+    }
