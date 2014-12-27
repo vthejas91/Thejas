@@ -12,15 +12,47 @@ public class BinaryTree {
 
    private Node root;
    
-   public void insertNode()
+   public void insertNode(int val)
    {
+        Node temp = new Node();
+        temp.createNode(val);
+        //System.out.println(root.value);
        if(root == null)
-       {
-           Node temp = new Node();
+       {          
            root =temp;
+            System.out.println(root.value);
        }
+      
        else
        {
+        Node parent = new Node();
+        parent = root;
+        while(true)
+        {
+            if(parent.left == null)
+            {
+                System.out.println("entered 1");
+                parent.left = temp;
+                return;
+            }
+            else if(parent.right == null)
+            {
+                System.out.println("entered 2");
+                parent.right = temp;
+                return;
+            }
+            else if(parent.value < val)
+            {
+                System.out.println("entered 3");
+                parent = parent.left;
+            }
+            else if(parent.value > val)
+            {
+                System.out.println("entered 4");
+                parent = parent.right;
+            }
+        }
+           
            
        }
    }
@@ -28,16 +60,27 @@ public class BinaryTree {
    {
        
    }
-   public void inorder()
+   public void inorder(Node focusNode)
    {
+       // left,root , right
+     inorder(focusNode.left);
+     System.out.println(focusNode.value);
+     inorder(focusNode.right);
        
    }
-   public void preorder()
+   public void preorder(Node focusNode)
    {
-       
+       // root, left,right
+       System.out.println(focusNode.value);
+       inorder(focusNode.left);
+       inorder(focusNode.right);
    }
-   public void postorder()
+   public void postorder(Node focusNode)
    {
+       // left,right,root
+       inorder(focusNode.left);
+       inorder(focusNode.right);
+       System.out.println(focusNode.value);
        
    }
    public void find(int val)
@@ -47,20 +90,15 @@ public class BinaryTree {
     
     public static void main(String[] args) {
         // TODO code application logic here
+        BinaryTree tree = new BinaryTree();
+        tree.insertNode(50);
+        tree.insertNode(20);
+        tree.insertNode(40);
+        tree.insertNode(35);
+        tree.insertNode(70);
+        tree.inorder(tree.root);
+        
+        
     }
     
 }
-
-// Node class
-public class Node {
-    int value;
-    Node left;
-    Node right;
-    
-    public void createNode(int val)
-    {
-        this.value = val;
-        this.left = null;
-        this.right = null;
-                
-    }
