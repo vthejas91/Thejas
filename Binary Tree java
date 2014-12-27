@@ -1,0 +1,66 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ *
+ * @author tviswan1
+ */
+public class BinaryTree {
+
+   private Node root;
+   
+   public void insertNode()
+   {
+       if(root == null)
+       {
+           Node temp = new Node();
+           root =temp;
+       }
+       else
+       {
+           
+       }
+   }
+   public void delete(int val)
+   {
+       
+   }
+   public void inorder()
+   {
+       
+   }
+   public void preorder()
+   {
+       
+   }
+   public void postorder()
+   {
+       
+   }
+   public void find(int val)
+   {
+       
+   }
+    
+    public static void main(String[] args) {
+        // TODO code application logic here
+    }
+    
+}
+
+// Node class
+public class Node {
+    int value;
+    Node left;
+    Node right;
+    
+    public void createNode(int val)
+    {
+        this.value = val;
+        this.left = null;
+        this.right = null;
+                
+    }
