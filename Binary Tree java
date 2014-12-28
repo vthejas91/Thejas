@@ -25,30 +25,31 @@ public class BinaryTree {
       
        else
        {
-        Node parent = new Node();
-        parent = root;
+        
+        Node parent = root;
         while(true)
         {
-            if(parent.left == null)
+            if(parent.left == null && parent.value> val)
             {
-                System.out.println("entered 1");
+                
                 parent.left = temp;
+              
                 return;
             }
-            else if(parent.right == null)
+            else if(parent.right == null && parent.value<val)
             {
-                System.out.println("entered 2");
+                
                 parent.right = temp;
                 return;
             }
-            else if(parent.value < val)
-            {
-                System.out.println("entered 3");
-                parent = parent.left;
-            }
             else if(parent.value > val)
             {
-                System.out.println("entered 4");
+                
+                parent = parent.left;
+            }
+            else if(parent.value < val)
+            {
+                
                 parent = parent.right;
             }
         }
@@ -63,41 +64,85 @@ public class BinaryTree {
    public void inorder(Node focusNode)
    {
        // left,root , right
-     inorder(focusNode.left);
-     System.out.println(focusNode.value);
+       if(focusNode!=null)
+       {
+           inorder(focusNode.left);
+     System.out.print(focusNode.value+"  ");
      inorder(focusNode.right);
-       
+      
+       }
+      
    }
    public void preorder(Node focusNode)
    {
        // root, left,right
-       System.out.println(focusNode.value);
-       inorder(focusNode.left);
-       inorder(focusNode.right);
+        if(focusNode!=null)
+        {
+            System.out.println(focusNode.value);
+            inorder(focusNode.left);
+            inorder(focusNode.right);
+        }
+       
    }
    public void postorder(Node focusNode)
    {
        // left,right,root
-       inorder(focusNode.left);
+       if(focusNode!=null)
+       {
+           inorder(focusNode.left);
        inorder(focusNode.right);
        System.out.println(focusNode.value);
+       
+       }
        
    }
    public void find(int val)
    {
+        int flag=0;   
+        Node parent = root;
+        while(parent != null)
+        {
+            if(parent.value == val)
+            {
+                System.out.println("Value Found");
+                flag=1;
+                break;
+            }
+            else if(parent.value < val)
+            {
+                parent = parent.right;
+            }
+            else if(parent.value > val)
+            {
+                parent = parent.left;
+            }
+           
+        }
+        if(flag==0)
+        {
+            System.out.println("Element not found");
+        }
+           
+           
+       
        
    }
     
     public static void main(String[] args) {
         // TODO code application logic here
         BinaryTree tree = new BinaryTree();
-        tree.insertNode(50);
-        tree.insertNode(20);
-        tree.insertNode(40);
-        tree.insertNode(35);
-        tree.insertNode(70);
-        tree.inorder(tree.root);
+        tree.insertNode(50);        
+        tree.insertNode(40);        
+        tree.insertNode(60);        
+        tree.insertNode(35);        
+       tree.insertNode(70);    
+       
+         tree.insertNode(37);         
+         tree.insertNode(64);        
+        tree.insertNode(90);
         
+      tree.inorder(tree.root);
+        tree.find(38);
         
     }
     
