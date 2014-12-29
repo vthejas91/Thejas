@@ -1,0 +1,36 @@
+public int MaxDepth(Node current)
+   {
+       
+       if(current!=null)
+       {
+           int lmin = MaxDepth(current.left)+1;
+           int rmin = MaxDepth(current.right)+1;
+        if(lmin> rmin)
+          return lmin;
+      else
+          return rmin;
+       }
+      else
+           return 0;
+     
+   }
+   
+   public int minValue(Node current)
+   {
+     
+       if(current!=null)
+       {
+           int lmin = Math.min(minValue(current.left), current.value);
+           int rmin = Math.min(minValue(current.right), current.value);
+        if(lmin< rmin)
+          return lmin;
+      else
+          return rmin;
+       }
+      else
+           return 0;
+     
+             
+       
+       
+   }
