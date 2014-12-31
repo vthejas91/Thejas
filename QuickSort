@@ -1,0 +1,86 @@
+
+import java.util.Random;
+
+
+public class Quick {
+
+    int array[];
+    int length;
+    
+    public void sort()
+    {
+        int p=0;
+        int q=array.length-1;
+        QuickSort(p,q);
+    }
+    
+    public int pivot(int left,int pivot,int right)
+    {
+        while(true)
+        {
+          if(array[left] <=array[pivot])
+          {
+              left++;
+          }
+          else if(array[right]>array[pivot])
+          {
+              right--;
+          }
+          else if(left<right)
+          {
+              int temp = array[left];
+              array[left] = array[right];
+              array[right] = temp;
+              
+          }
+          else
+          {
+              return left;
+          }
+                                 
+        }               
+        //return 0;
+    }
+    
+    public void QuickSort(int left,int right)
+    {
+        
+        int pivot = left;
+        if(left>=right)
+        {
+            return ;
+        }
+        else
+        {
+            int part=pivot(left,pivot,right);
+            QuickSort(0, part-1);
+            QuickSort(part+1, right);
+        }
+              
+                
+    }
+    public static void main(String[] args) {
+        // TODO code application logic here
+        
+        Random rand = new Random();
+        Quick q = new Quick();
+        q.array = new int[8];
+        
+        for(int i=0;i<8;i++)
+        {
+            q.array[i]=rand.nextInt(50);
+        }
+        System.out.println("Before sorting");
+        for(int i=0;i<8;i++)
+        {
+            q.array[i]=rand.nextInt(50);
+        }
+        
+        
+        q.sort();
+        
+        
+        
+    }
+    
+}
