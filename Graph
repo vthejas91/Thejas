@@ -1,0 +1,55 @@
+
+public class Graph {
+    int   adjmatrix[][];
+    int      rootNode = 0;
+    int      NNodes;
+    boolean visited[];
+   
+    public Graph(int n)
+    {
+        adjmatrix = new int[n][n];
+        NNodes = n;
+        visited = new boolean[n];
+    }
+    public Graph(int[][] mat)
+    {
+        int i,j;
+        NNodes = mat.length;
+        adjmatrix = new int[NNodes][NNodes];
+        visited = new boolean[NNodes];
+        
+        for(i=0;i<NNodes;i++)
+        {
+            for(j=0;j<NNodes;j++)
+            {
+                adjmatrix[i][j]=mat[i][j];
+            }
+        }
+        
+    }      
+    
+   public void DFS(int i)
+   {
+       visited[i]=true;
+       System.out.println(i);
+       for(int j=0;j<NNodes;j++)
+       {
+           if(adjmatrix[i][j]!=0 && visited[j]!=true)
+           {
+               DFS(j);
+           }
+           
+       }
+             
+   }
+ 
+   public void clearVisited()
+   {
+      int i;
+
+      for (i = 0; i < visited.length; i++)
+         visited[i] = false;
+   }
+   
+    
+}
