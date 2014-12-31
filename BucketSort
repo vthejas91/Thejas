@@ -1,0 +1,121 @@
+
+import java.util.Random;
+
+
+public class BucketList {
+
+    Object aux[];
+    int array[];
+    
+    public BucketList()
+    {
+        aux= new Object[10];
+        for(int i=0;i<10;i++)
+        {
+            aux[i]=null;
+        }
+    }
+    
+    public void BucketSort()
+    {
+        for(int i=0;i<25;i++)
+        {
+            int temp1=0;
+            int temp =array[i];
+            while(temp>0)
+            {
+                temp1=temp%10;
+                temp = temp/10;
+            }
+            
+             Node sel = new Node(array[i]);
+            if((Node)aux[temp1]==null)
+            {
+                aux[temp1] = sel;
+            }
+            else
+            {
+                
+                Node add = (Node)aux[temp1];
+                while(add.next!=null)
+                {
+                                       
+                    add=add.next;
+                   
+                }
+                add.next = sel;
+            }
+            
+        }
+      
+        
+    }
+    public void Sort()
+    {
+             for(int i=0;i<10;i++)
+             {
+                 
+                 Node temp1 = (Node)aux[i];
+                                 
+                 while(temp1!=null)
+                 {
+                     Node temp = temp1;
+                     Node min =new Node(temp.value);
+                     while(temp!=null)
+                     {
+                         if(min.value>temp.value)
+                         {
+                             min.value = temp.value;
+                             temp=temp.next;
+                         }
+                         else
+                         {
+                             temp=temp.next;
+                         }
+                     }
+                     
+                     
+                     
+                     temp1=temp1.next;
+                 }
+                 
+             }
+        
+    }
+    
+    public static void main(String[] args) {
+        // TODO code application logic here
+        
+        Random rand = new Random();
+        BucketList bl = new BucketList();
+        bl.array = new int[25];
+        for(int i=0;i<25;i++)
+        {
+            bl.array[i]=rand.nextInt(100);
+        }
+        System.out.println("Before sorting");
+        for(int i=0;i<25;i++)
+        {
+            System.out.print(bl.array[i]+"   ");
+        }
+        bl.BucketSort();
+        System.out.println("After sorting");
+       
+        
+        for(int i=0;i<10;i++)
+        {
+            if(bl.aux[i]!=null)
+            {
+                Node temp = (Node)bl.aux[i];
+                while(temp!=null)
+                {
+                System.out.print(temp.value+"  ");  
+                temp=temp.next;
+                }
+                System.out.println("");
+            }
+        }
+        
+    }
+    
+}
