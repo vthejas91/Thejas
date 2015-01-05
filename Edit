@@ -136,3 +136,22 @@ public class Stack {
     }
     
 }
+public int balance(Node focus)
+   {      
+       int left=0;
+       int right=0;
+       
+           if(focus.left!=null)
+           {
+                left= balance(focus.left)+1;
+           }
+          if(focus.right!=null)
+          {
+                right = balance(focus.right)-1; 
+          }
+            
+                      
+          System.out.println(left+right);
+           return left+right;          
+       
+   }
