@@ -1,0 +1,109 @@
+
+import java.util.Random;
+
+
+public class MergeSort {
+
+    int array[];
+    int length;
+    
+    public void Merge(int p,int q)
+    {
+        
+        if(p<q)
+        {
+        int r= (p+q)/2;
+        Merge(p,r);
+        Merge(r+1,q);
+            System.out.println("p"+p+"r"+r+"q"+q);
+        Mergesort(p, r, q);
+
+        }
+            }
+    
+        
+    public void Mergesort(int p,int r,int q)
+    {
+        System.out.println("Entered");
+        int l1= r-p+1;
+        int l2 = q-r;
+        int c=p;
+        int d=r+1;
+        int left[] = new int[l1];
+        int right[] = new int[l2];
+        for(int i=0;i<l1;i++)
+        {
+            left[i]=array[c];
+            c++;
+        }
+        for(int i=0;i<l2;i++)
+        {
+            right[i]=array[d];
+            d++;
+        }
+        
+               
+        int i=0;
+        int j=0;
+        for(int k=p;k<p+l1+l2;k++)
+        {
+            System.out.println("k values "+k);
+            if(i>=l1)
+            {
+                array[k]=right[j];
+                                   
+                j++;
+                
+            }
+            else if(j>=l2)
+            {
+                array[k]=left[i];
+           
+                i++;
+            }
+            else if(left[i]<=right[j])
+            {
+               array[k]=left[i];
+              
+               i++;
+            }
+            else
+            {
+                array[k]=right[j];
+              
+                j++;
+            }
+        }
+       
+    }
+    
+    
+    
+    public static void main(String[] args) {
+        // TODO code application logic here
+    Random rand = new Random();
+     MergeSort ms = new MergeSort();
+     
+     ms.array = new int[16];
+     for(int i=0;i<16;i++)
+     {
+         ms.array[i]=rand.nextInt(50);
+     }
+     
+    
+        System.out.println("Before sorting");
+        for(int i=0;i<16;i++)
+        {
+         System.out.println(ms.array[i]);
+        }
+        ms.Merge(0,15);
+                System.out.println("After sorting");
+       for(int i=0;i<16;i++)
+        {
+         System.out.println(ms.array[i]);
+        }
+        
+        
+    }
+    
+}
