@@ -1,0 +1,31 @@
+public int balance(Node focus)
+   {      
+       int left=0;
+       int right=0;
+       
+           if(focus.left!=null)
+           {
+                left= balance(focus.left)+1;
+           }
+          if(focus.right!=null)
+          {
+                right = balance(focus.right)+1; 
+          }
+            
+                      
+          //System.out.println(left+right);
+          if(left > right)
+          {
+              System.out.println("left "+ left +" focus   "+focus.value);
+                            return left;
+          }
+              
+          else
+          {
+              System.out.println("right " + right +"  focus  "+focus.value);
+              return right;
+          }
+              
+                    
+       
+   }
