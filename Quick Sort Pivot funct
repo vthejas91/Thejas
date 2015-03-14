@@ -1,0 +1,89 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package javaapplication1;
+import java.util.*;
+/**
+ *
+ * @author tviswan1
+ */
+public class JavaApplication1 {
+
+    /**
+     * @param args the command line arguments
+     */
+    
+    public void pivot(int[] arr,int j)
+    {
+        int pivot = arr[j];
+        int length = arr.length;
+        int p=0;
+        int q=length-1;
+        
+        int temp=0;
+        System.out.println("Pivot"+ arr[j]);
+        while(p<=q)
+        {
+            while(arr[p]<pivot && p!=length-1)
+            {
+                p++;
+            }
+            while(arr[q]>pivot && q!=0)
+            {
+                q--;
+            }
+            if(p<q)
+            {
+                System.out.println("Entered");
+                temp = arr[p];
+                arr[p] = arr[q];
+                arr[q] = temp;
+                
+                System.out.println("After Swapping");
+                for(int i=0;i<8;i++)
+                {
+                System.out.print(arr[i]+"  ");
+            
+                }
+                p++;
+                q--;
+        System.out.println("");
+        
+            }
+                        
+        }
+        System.out.println("After Sorting");
+        for(int i=0;i<8;i++)
+        {
+            System.out.print(arr[i]+"  ");
+            
+        }
+        System.out.println("");
+        
+    }
+    
+    public static void main(String[] args) {
+        // TODO code application logic here
+        int[] arr = new int[8];
+        Random r = new Random();
+        for(int i=0;i<8;i++)
+        {
+            arr[i] = r.nextInt(50);
+        }
+        JavaApplication1 obj = new JavaApplication1();
+        System.out.println("Before sorting");
+        for(int i=0;i<8;i++)
+        {
+            System.out.print(arr[i]+"  ");
+            
+        }
+        System.out.println("");
+        obj.pivot(arr,3);
+        
+        
+        
+    }
+    
+}
