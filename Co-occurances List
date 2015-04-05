@@ -1,0 +1,166 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package javaapplication14;
+
+import java.io.*;
+import java.util.*;
+import java.util.Map.Entry;
+
+/**
+ *
+ * @author thejas
+ *  
+ */
+
+
+public class Best_Pairs {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        // TODO code application logic here
+        
+        HashMap<String,Integer> map = new HashMap<String,Integer>();
+        int i=0,k;
+        HashMap<String,Integer> pairs = new HashMap<String,Integer>();
+        
+        HashMap<Tuple,Integer> p = new HashMap<Tuple,Integer>();
+        
+        
+        
+        
+       
+        // Reading from the text file.
+        try {
+            BufferedReader in = new BufferedReader(new FileReader("E:\\job\\shape\\SE_Test\\Artist_lists_small.txt"));
+            String str;
+            while ((str = in.readLine()) != null)
+            {
+                String[] artist = str.split(",");
+                
+                for(int j=0;j<artist.length;j++)
+                {
+                    
+                    if(map.containsKey(artist[j]))
+                    {
+                        k = map.get(artist[j]);
+                        map.put(artist[j],k+1);                        
+                    }
+                    else
+                    {
+                        map.put(artist[j], 1);
+                    }
+                }
+                                                       
+            }
+            in.close();
+        } catch (IOException e) {
+            System.out.println("The error is "+e);
+        }
+       
+        int init = map.size();
+        Set<String> list = new HashSet<String>();
+       /* Set<String> s = map.keySet();
+        
+        for(String key : s)
+        {
+            list.add(key);
+        }
+        */
+        int tot = list.size();
+        
+        System.out.println("init val "+init);
+        
+        Set<String> set = map.keySet();
+        for(String key : set)
+        {
+            if(map.get(key)>=50)
+            {
+                pairs.put(key,map.get(key));
+            }
+        }
+        
+       Set<String> keys = pairs.keySet();
+        int count = 0;
+        
+	// Loop over String keys.
+	for (String key : keys) {
+	//    System.out.println(key+" "+pairs.get(key) );
+            count++;
+	}
+        System.out.println("count "+count);
+        
+        String[] a = new String[count];
+        System.out.println("a  "+ a.length); 
+        int z=0;
+        for (String key : keys) {
+	 a[z]=key;
+         z++;
+	}
+                
+        for(int fir=0;fir<count;fir++)
+        {
+            for(int sec=fir+1;sec<count;sec++)
+            {
+                Tuple n = new Tuple();
+                n.setOne(a[fir]);
+                n.setTwo(a[sec]);
+                p.put(n, 0);
+                                
+            }
+        }
+        
+        Set<Tuple> t = p.keySet();
+       /* for(Tuple l : t)
+        {
+            System.out.println(l.getOne()+"  "+l.getTwo());
+        }*/
+        try {
+            String str;
+            for(Tuple l : t)
+            {
+                String one = l.getOne();
+                String two = l.getTwo();
+                
+                        BufferedReader in = new BufferedReader(new FileReader("E:\\job\\shape\\SE_Test\\Artist_lists_small.txt"));
+
+            while ((str = in.readLine()) != null)
+            {
+                String[] artist = str.split(",");
+                if(Arrays.asList(artist).contains(one) && Arrays.asList(artist).contains(two))
+                {
+                    int value = p.get(l);
+                    
+                    p.put(l, value+1);
+                }
+                
+            }
+             in.close();
+            }
+           
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
+        
+        t = p.keySet();
+        for(Tuple s : t)
+        {
+            if(p.get(s)>50)
+            {
+                System.out.println(s.getOne()+" "+s.getTwo()+"  "+p.get(s));
+            }
+        }
+        
+        
+    }
+    
+    
+    
+}
