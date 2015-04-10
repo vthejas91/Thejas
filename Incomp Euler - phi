@@ -1,0 +1,64 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+import java.math.*;
+
+public class Solution {
+    public static void main(String[] args) {
+
+    Scanner in = new Scanner(System.in);
+        int N = in.nextInt();
+        int count = 0 ;
+        List a = new ArrayList();
+        
+        for(int i=2;i<N;i++)
+            {
+        if(a.isEmpty())
+            {
+            if(N%i!=0)
+             {
+                 System.out.println("in empty " + i +" counted ");
+                count++;
+            } 
+            else
+            {
+                a.add(i);
+                System.out.println("inserted "+i);
+            }
+        }
+        else
+            {
+                System.out.println("i inide else "+i);
+               int j =0 ;int k=0;
+            int p=0;
+            while(j<a.size() && p ==0)
+                {
+                 k = (int)a.get(j);
+                if(i%k==0)
+                p=1;
+                j++;
+            }
+            if(p==1)
+                {
+                if(N%k!=0)
+                {
+                    count++;
+                    System.out.println(i);
+                }
+                    
+            }
+            else
+                {
+                a.add(i);
+            }
+                
+            }      
+            
+        }      
+        
+        System.out.println(count);
+        
+    }
+}
