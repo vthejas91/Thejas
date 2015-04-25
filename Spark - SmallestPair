@@ -1,4 +1,6 @@
-package Operations.SmallPair;
+ppackage Operations.Small;
+
+
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -59,7 +61,7 @@ public class App
         		
         		);
 
-         JavaPairRDD<Integer,Coordinate> points = headerLessInputCsv.mapToPair(new PairFunction<String,Integer,Coordinate>()
+         JavaPairRDD<Coordinate,Integer> points = headerLessInputCsv.mapToPair(new PairFunction<String,Coordinate,Integer>()
         		 {
 
 					/**
@@ -67,7 +69,7 @@ public class App
 					 */
 					private static final long serialVersionUID = 1L;
 
-					public Tuple2<Integer,Coordinate> call(String s)
+					public Tuple2<Coordinate,Integer> call(String s)
 							throws Exception {
 						// TODO Auto-generated method stub
 						String[] y = s.split(",");
@@ -77,18 +79,40 @@ public class App
 						pt.setX(Double.parseDouble(y[0]));
 						pt.setY(Double.parseDouble(y[1]));
 						
-						return new Tuple2<Integer,Coordinate>(i,pt);
+						return new Tuple2<Coordinate,Integer>(pt,i);
 					}
         	 
         		 });
          
-         JavaPairRDD<Integer, Iterable<Coordinate>> point = points.groupByKey();
+         JavaPairRDD<Coordinate,Integer> spoints = points.sortByKey();
+         JavaRDD<Coordinate> sortval = spoints.keys();
          
-         JavaRDD<Iterable<Coordinate>> val = point.values();
-         
+        // JavaRDD<Integer,Coordinate> valpart = sortval.mapPartitionsWithIndex(new Function2<Integer,Iterator<Coordinate>,Iterator<Coordinate>>Integer,3)
+         JavaRDD<Tuple2<Integer,Coordinate>> valparts = sortval.mapPartitionsWithIndex(new Function2<Integer,Iterator<Coordinate>,Iterator<Tuple2<Integer, Coordinate>>>()
+        		 {
 
+					
+					private static final long serialVersionUID = 1L;
+
+					public Iterator<Tuple2<Integer, Coordinate>> call(Integer id, Iterator<Coordinate> iter)
+							throws Exception {
+						// TODO Auto-generated method stub
+						List<Tuple2<Integer,Coordinate>> ptlist = new ArrayList<Tuple2<Integer,Coordinate>>();
+						while(iter.hasNext())
+						{
+	    					   Coordinate coord = iter.next();
+	    					   ptlist.add(new Tuple2<Integer,Coordinate>(id,coord));	
+						}
+						
+											
+						
+						
+						return ptlist.iterator();
+					}
+        	 
+        		 },false);
          
-         JavaRDD<Coordinate> closePair = val.map(new Function<Iterable<Coordinate>,Coordinate>()
+         JavaRDD<Tuple2<Integer,Coordinate>> candpts = valparts.mapPartitions(new FlatMapFunction<Iterator<Tuple2<Integer,Coordinate>>,Tuple2<Integer,Coordinate>>()
         		 {
 
 					/**
@@ -96,12 +120,8 @@ public class App
 					 */
 					private static final long serialVersionUID = 1L;
 
-					public Coordinate call(Iterable<Coordinate> input)
+					public Iterable<Tuple2<Integer, Coordinate>> call(Iterator<Tuple2<Integer, Coordinate>> s)
 							throws Exception {
-						List<Coordinate> pts = new ArrayList<Coordinate>();
-						List<Coordinate> closepoints = new ArrayList<Coordinate>();
-
-						Iterator<Coordinate> Iter;
 						Double dist = 10.0; 
 						Double xdiff;
 						Double ydiff; 						
@@ -109,20 +129,27 @@ public class App
 						Coordinate first = null;
 						Coordinate second  = null;
 						
-						Iter = input.iterator();
-						while(Iter.hasNext())
+						int x = 0 ;
+						// TODO Auto-generated method stub
+						List<Tuple2<Integer,Coordinate>> cdlist = new ArrayList<Tuple2<Integer,Coordinate>>();
+						List<Tuple2<Integer,Coordinate>> canlist = new ArrayList<Tuple2<Integer,Coordinate>>();
+
+						while(s.hasNext())
 						{
-							pts.add(Iter.next());
+							cdlist.add(s.next());
+														
 						}
-						
-						for(Coordinate cand: pts)
+						for(Tuple2<Integer,Coordinate> p : cdlist)
 						{
-							distance = 0.0;
-							for(Coordinate cand1: pts)
+							for(Tuple2<Integer,Coordinate> q : cdlist)
 							{
-								xdiff = cand.getX() - cand1.getX();
-    							ydiff = cand.getY() - cand1.getY();
-    							if (xdiff == 0.0 && ydiff == 0.0)
+								Coordinate c1 = p._2();
+								Coordinate c2 = q._2();
+								x = p._1();
+								
+								xdiff = c1.getX() - c2.getX();
+								ydiff = c1.getY() - c2.getY();
+								if (xdiff == 0.0 && ydiff == 0.0)
     							{
     								continue;
     							}
@@ -130,32 +157,32 @@ public class App
     							if (distance < dist)
     							{
     								dist = distance;
-    								first = cand;
-    								second = cand1;
+    								first = c1;
+    								second = c2;
     							}
     						}
     					}
-						closepoints.add(first);
-						closepoints.add(second);
+ 					   canlist.add(new Tuple2<Integer,Coordinate>(x,first));	
+ 					  canlist.add(new Tuple2<Integer,Coordinate>(x,second));
+ 					  
+ 					  
+ 					  return  canlist;
+											
 						
-					System.out.println("FIRST "+first.getX()+"  "+first.getY());
-					System.out.println("SECOND "+second.getX()+"  "+second.getY());
-										
-						
-						
-						// TODO Auto-generated method stub
-						return null;
 					}
         	 
-					
-					
         		 });
-              
+        		
+         
+        
          
          
+         candpts.saveAsTextFile(outputFilePath);					
+        		 
+        		         
          
          
-         closePair.saveAsTextFile(outputFilePath);
+       //  closePair.saveAsTextFile(outputFilePath);
          
          
         		     	
