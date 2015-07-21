@@ -1,13 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author tviswan1
- */
 public class Node {
     int value;
     Node next;
@@ -162,10 +152,281 @@ public class Node {
             System.out.println(n.value);
             n= n.next;
         }
-        System.out.println("Display");
+       // System.out.println("Display");
+        
+    }
+    public void bubsort( )
+    {
+        
+        Node d =this; 
+        Node t = this;
+        Node m = t;   
+         Node n = m.next;
+        while(d!=null)
+        {
+            
+            while(n!=null)
+            {
+                if(m.value>n.value)
+                {
+                    int  temp = m.value;
+                    m.value = n.value;
+                    n.value = temp;
+                }
+                
+                m = m.next;
+                n = n.next;
+            }
+             m = t;   
+             n = m.next;
+           d = d.next;
+        }
+        
+        
+        
+        
+    }
+    
+    public void mergesplit(int p,int q)
+    {
+        System.out.println("entered mergesplit");
+        if(p>q)
+            return;
+        else
+        {
+           // System.out.println("entered else mergesplit");
+            int r = (p+q)/2;
+            mergesplit(p,r-1);
+            mergesplit(r,q-1);
+            merge(p,r-1,q);
+            
+        }
+        
+        
+    }
+    
+    public void merge(int a,int b,int c)
+    {
+        Node t = this;
+        int n = a;
+        while(n>0)
+        {
+            t = t.next;
+            n--;
+        }
+        Node t1 = t;
+        
+        int d1 = b-a+1;
+        int d2 = c-b;
+        Node x = new Node();
+        Node y = new Node();
+        while(d1>0)
+        {
+            x.insertNode(t.value);
+            t = t.next;
+            d1--;
+        }
+        while(d2>0)
+        {
+            y.insertNode(t.value);
+            t = t.next;
+            d2--;
+        }
+        
+        int p = c - a;
+        while(p>0)
+        {
+            if(x==null)
+            {
+                t1.value = y.value;
+                y = y.next;
+                t1 = t1.next;
+            }
+            else if(y == null)
+            {
+                t1.value = x.value;
+                x = x.next;
+                t1 = t1.next;
+            }
+            else
+            {
+                if(x.value<=y.value)
+                {
+                    t1.value = x.value;
+                    x = x.next;
+                    t1 = t1.next;
+                }
+                else
+                {
+                    t1.value = y.value;
+                    y = y.next;
+                    t1 = t1.next;
+                }
+            }
+            
+            
+            
+            p--;
+        }
+        
+        
+        
+    }
+    
+    public void mergesort()
+    {
+        Node t = this;
+        int count=0;
+        while(t!=null)
+        {
+            count++;
+            t=t.next;
+        }
+        int p = 0;
+        int q = count ;
+        int r = count/2;
+        mergesplit(p,q);
+        
+        
+    }
+    
+    public Node merge2lists(Node a, Node b)
+    {
+        Node temp = new Node();
+        while(a!=null || b!=null)
+        {
+            if(a==null)
+            {
+                temp.insertNode(b.value);
+                b=b.next;
+            }
+            else if(b==null)
+            {
+                temp.insertNode(a.value);
+                a = a.next;
+            }
+            else
+            {
+                if(a.value<=b.value)
+                {
+                    temp.insertNode(a.value);
+                    a = a.next;
+                }
+                else
+                {
+                    temp.insertNode(b.value);
+                b=b.next;
+                }
+            }
+            
+        }
+        
+        return temp;
+    }
+    
+    public Node Rotate(int k)
+    {
+        Node t = this;
+        Node d = this;
+        Node start = this;
+        
+        while(t.next!=null)
+        {
+            t = t.next;
+        }
+        
+        while(k-1>0)
+        {
+            d = d.next;            
+            
+            k--;
+        }
+        Node n = d.next;
+        d.next = null;
+        t.next = start;
+        
+        return n;
+        
+    }
+    
+    public void swapAlt()
+    {
+        Node t = this ;
+        while(t!=null)
+        {
+            if(t.next!=null)
+            {
+                int temp ;
+                temp =  t.value;
+                t.value = t.next.value;
+                t.next.value = temp;
+                
+                t = t.next.next;
+            }          
+            else
+            {
+                t= t.next;
+            }
+            
+        }
+        
+        
+    }
+    
+    public void DelAlt()
+    {
+        Node t = this ;
+        while(t!=null)
+        {
+            if(t.next!=null)
+            {
+                                
+                t.next = t.next.next;
+                t = t.next;
+            }          
+            else
+            {
+                t= t.next;
+            }
+            
+        }
+        
+        
         
     }
         
-    
+    public static void main(String[] args) {
+        // TODO code application logic here
+        Node a = new Node();
+        a.insertNode(10);
+        a.insertNode(20);
+        a.insertNode(30);
+        a.insertNode(40);
+        a.insertNode(50);
+        a.insertNode(60);
+        a.insertNode(70);
+      
+        //a.swapAlt();
+         a.DelAlt();
+//        a = a.Rotate(0);
+       // a.mergesort();
+        
+        a.display();
+        //a.display();
+        Node b = new Node();
+        b.insertNode(8);
+        b.insertNode(1);
+        b.insertNode(20);
+        b.insertNode(30);
+        //b.mergesort();
+        
+        //b.display();
+        //Node c = new Node();
+        //c = c.merge2lists(a, b);
+        
+        //c.display();
+        
+    }
+
     
 }
