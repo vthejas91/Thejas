@@ -26,9 +26,13 @@ public class DoubleLink {
             if(head.right==null)
             {
                 head.right = temp;
+                temp.left = head;
             }
             else
             {
+                Node x = head.right;
+                x.left = temp;
+                
                 temp.right = head.right;
                 temp.left = head;
                 head.right = temp;
@@ -48,8 +52,12 @@ public class DoubleLink {
             i++;
             
         }
+        
         Node temp = new Node();
         temp.value = n ; 
+        Node x = t.right;
+        x.left = temp;
+        
         temp.right = t.right;
         temp.left = t;
         t.right = temp;
@@ -153,16 +161,16 @@ public class DoubleLink {
         d.insertEnd(7);
         d.insertEnd(9);
         d.insertEnd(11);
-        d.insertEnd(13);
-        d.insertEnd(15);
+       // d.insertEnd(13);
+       // d.insertEnd(15);
         //d.InsertFront(6);
        ///d.InsertFront(8);
-       // d.InsertFront(10);
-       // d.InsertFront(12);
+      //  d.InsertFront(10);
+      //  d.InsertFront(12);
         
-      //  d.InsertAfterNode(1, 14);
+        d.InsertAfterNode(1, 14);
         
-        d.DeleteMiddle(4);
+        d.DeleteMiddle(1);
         d.display();
        // d.displayfromback();
         
