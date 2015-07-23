@@ -1,0 +1,171 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+/**
+ *
+ * @author tviswan1
+ */
+public class DoubleLink {
+
+    Node head;
+    
+    public void InsertFront(int n)
+    {
+        if(head==null)
+        {
+            head = new Node();
+            head.value = n;
+            
+        }
+        else
+        {
+            Node temp = new Node();
+            temp.value = n;
+            if(head.right==null)
+            {
+                head.right = temp;
+            }
+            else
+            {
+                temp.right = head.right;
+                temp.left = head;
+                head.right = temp;
+            }
+        }
+        
+        
+    }
+    
+    public void InsertAfterNode(int k,int n)
+    {
+        Node t = head;
+        int i =0;
+        while(i<k)
+        {
+            t = t.right;
+            i++;
+            
+        }
+        Node temp = new Node();
+        temp.value = n ; 
+        temp.right = t.right;
+        temp.left = t;
+        t.right = temp;
+                
+        
+        
+    }
+    
+    public void insertEnd(int n)
+    {
+        if(head==null)
+        {
+            head = new Node();
+            head.value = n;
+            
+        }
+        else if(head.right==null)
+        {
+            
+            Node temp = new Node();
+            temp.value = n;
+            head.right = temp;
+            temp.left = head;
+                                
+            
+        }
+        else
+        {
+            Node t = head;
+            while(t.right!=null)
+            {
+                t = t.right;
+            }
+            
+            Node temp = new Node();
+            temp.value = n;
+            
+            temp.left = t ; 
+            t.right = temp;
+            
+        }
+        
+        
+        
+    }
+    
+    public void display()
+    {
+        Node t = head;
+        while(t!=null)
+        {
+            System.out.println(t.value);
+            t = t.right;
+        }
+    }
+    
+    public void displayfromback()
+    {
+        Node t = head;
+        while(t.right!=null)
+        {
+            t = t.right;
+        }
+        while(t!=null)
+        {
+            System.out.println(t.value);
+            t = t.left;
+        }
+        
+    }
+    
+    public void DeleteHead()
+    {
+        
+        head = head.right;
+        
+    }
+    
+    public void DeleteMiddle(int k)
+    {
+        Node t = head;
+        while(k>0)
+        {
+            t =t.right;
+            
+            k--;
+        }
+        System.out.println("t "+t.value );
+       
+        t = t.left ;
+        
+        t.right = t.right.right;
+        //t.left = null;
+        //t.right = null;
+    }
+    
+    public static void main(String[] args) {
+       
+        DoubleLink d = new DoubleLink();
+        d.insertEnd(5);
+        d.insertEnd(7);
+        d.insertEnd(9);
+        d.insertEnd(11);
+        d.insertEnd(13);
+        d.insertEnd(15);
+        //d.InsertFront(6);
+       ///d.InsertFront(8);
+       // d.InsertFront(10);
+       // d.InsertFront(12);
+        
+      //  d.InsertAfterNode(1, 14);
+        
+        d.DeleteMiddle(4);
+        d.display();
+       // d.displayfromback();
+        
+    }
+    
+}
