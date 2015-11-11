@@ -1,0 +1,190 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package circularlinkedlist;
+
+/**
+ *
+ * @author tviswan1
+ */
+public class CircularLinkedList {
+
+    Node h;
+    Node h1;
+    public void insertNode(int val)
+    {
+        if(h==null)
+        {
+            h = new Node();
+            h.value = val;
+            h.next = h;
+        }
+        else if(h.next==h)
+        {
+            Node temp = new Node();
+            temp.value = val;
+            h.next = temp;
+            temp.next = h;
+        }
+        else
+        {
+            Node temp = h.next;
+            while(temp.next!=h)
+            {
+                temp = temp.next;
+            }
+            Node temp2 = new Node();
+            temp2.value = val;
+            temp.next = temp2;
+            temp2.next = h;
+        }
+        
+    }
+    public void print()
+    {
+        Node temp = h;
+        while(temp.next!=h)
+        {
+            System.out.println(temp.value+"  ");
+            temp = temp.next;
+        }
+        System.out.println(temp.value+"  ");
+    }
+    
+    public void split()
+    {
+        Node temp1 = h;        
+        Node temp2 = h;
+        while(temp2.next!=h && temp2.next.next!=h)
+        {
+            temp2 = temp2.next.next;
+            temp1 = temp1.next;
+        }
+        if(temp2.next!=h)
+        {
+            temp2 = temp2.next;
+        }
+        
+        h1 = temp1.next;
+        temp2.next = h1;
+        temp1.next = h;
+        
+    }
+    
+    public void printSplit()
+    {
+         System.out.println("First List");
+        Node temp = h;
+        while(temp.next!=h)
+        {
+            System.out.println(temp.value+"  ");
+            temp = temp.next;
+        }
+        System.out.println(temp.value+"  ");
+        
+        System.out.println("Second List");
+        temp = h1;
+        
+        while(temp.next!=h1)
+        {
+            System.out.println(temp.value+"  ");
+            temp = temp.next;
+        }
+        System.out.println(temp.value+"  ");
+    }
+    
+    public void SortedInsert(int val)
+    {
+        if(h==null)
+        {
+            h = new Node();
+            h.value = val;
+            h.next = h;
+        }
+        else if(h.next ==h)
+        {
+            Node temp = new Node();
+            temp.value = val;
+            if(h.value <= temp.value)
+            {
+                h.next = temp;
+                temp.next = h;
+            }
+            else
+            {
+                Node temp2 = h;
+                temp.next = temp2;
+                temp2.next = temp;
+                h = temp;
+            }
+        }
+        else
+        {
+            Node temp = new Node();
+            temp.value = val;
+            if(h.value > temp.value)
+            {
+                Node temp2 = h;
+                temp.next = temp2;
+                while(temp2.next!=h)
+                {
+                    temp2 = temp2.next;
+                    
+                }
+                temp2.next = temp;
+                h = temp;
+                                
+            }
+            else
+            {
+                Node temp2 = h;
+                while(temp2.next.value < temp.value && temp2.next!=h)
+                {
+                    temp2= temp2.next;
+                }
+                temp.next = temp2.next;
+                temp2.next = temp;
+            }
+        }
+    }
+    
+    
+    public static void main(String[] args) {
+         CircularLinkedList c1 = new CircularLinkedList();
+        // c1.insertNode(12);
+        // c1.insertNode(56);
+        // c1.insertNode(2);
+        // c1.insertNode(11);
+        // c1.insertNode(13);
+        // c1.insertNode(7);         
+         
+//         c1.split();
+        
+//         c1.printSplit();
+         
+         c1.SortedInsert(8);
+         c1.SortedInsert(10);
+         c1.SortedInsert(2);
+         c1.SortedInsert(5);
+         c1.SortedInsert(7);
+         c1.SortedInsert(6);
+         c1.print();
+    } 
+    
+}
+//
+
+NODE CLASS
+package circularlinkedlist;
+
+/**
+ *
+ * @author tviswan1
+ */
+public class Node {
+
+    int value;
+    Node next;
+}
