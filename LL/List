@@ -1,0 +1,233 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package linkedlist;
+
+/**
+ *
+ * @author tviswan1
+ */
+public class LinkedList {
+    
+    Node head;
+  
+    public void insertAtEnd(int val)
+    {
+        if(head==null)
+        {
+            head = new Node();
+            head.value = val;
+            head.next = null;
+        }
+        else 
+        {
+            Node temp = head;
+            while(temp.next!=null)
+            {
+                temp = temp.next;
+            }
+            Node temp2 = new Node();
+            temp2.value = val;
+            
+            temp.next = temp2;
+        }
+    }
+    
+    public void push(int val)
+    {
+        Node temp = head;
+        Node temp2 = new Node();
+        temp2.value = val;
+        temp2.next = temp;
+        
+        head = temp2;
+    }
+    
+    public void pop()
+    {
+        Node temp = head;
+        if(temp.next==null)
+        {
+            head = null;
+        }
+        else
+        {
+            temp = temp.next;
+            head = temp;
+        }
+    }
+    
+    public void print()
+    {
+        Node temp = head;
+        while(temp!=null)
+        {
+            System.out.println(temp.value);
+            temp = temp.next;
+        }
+    }
+    
+    public void frontBackSplit()
+    {
+        Node temp = head;
+        Node temp2 = head;
+        while(temp2.next!=null && temp2.next.next!=null)
+        {
+            temp2 = temp2.next.next;
+            temp = temp.next;
+        }
+        if(temp2.next!=null)
+        {
+            temp2 = temp2.next;
+        }
+        
+        LinkedList second = new LinkedList();
+        second.head = temp.next;
+        temp.next = null;
+        print();
+        System.out.println("second list");
+        second.print();
+                       
+    }
+    
+    
+    
+    public void MoveNode(LinkedList m, LinkedList n)
+    {
+        Node temp1 = m.head;
+        Node temp2 = n.head;
+        
+        Node temp3 = temp2.next;
+        temp2.next = temp1;
+        m.head = temp2;
+        n.head = temp3;
+                
+    }
+        
+    public void shuffleMerge(LinkedList m, LinkedList n)
+    {
+        LinkedList k = new LinkedList();
+        Node temp1 = m.head;
+        Node temp2 = n.head;
+        int count = 0;
+        while(temp1!=null || temp2!=null)
+        {
+            if(temp1==null)
+            {
+                k.insertAtEnd(temp2.value);
+                temp2 = temp2.next;
+            }
+            else if(temp2==null)
+            {
+                k.insertAtEnd(temp1.value);
+                temp1 = temp1.next;
+            }
+            else
+            {
+                if(count%2==0)
+                {
+                    k.insertAtEnd(temp1.value);
+                    temp1 = temp1.next;
+                    count++;
+                }
+                else
+                {
+                    k.insertAtEnd(temp2.value);
+                    temp2 = temp2.next;
+                    count++;
+                }
+            }
+        }
+        k.print();        
+        
+    }
+    
+    
+            
+    public void ShuffleList(LinkedList m, LinkedList n)
+    {
+       LinkedList k = new LinkedList();
+      
+       while(m.head!=null || n.head!=null)
+        {
+            if(m.head==null)
+            {
+                MoveNode(k,n);
+                //if(n.head!=null)
+                //n.head = n.head.next;
+            }
+            else if(n.head==null)
+            {
+                MoveNode(k,m);
+                //m.head = n.head.next;
+            }
+            else
+            {
+                if(m.head.value<=n.head.value)
+                {
+                    
+                    MoveNode(k,m);
+                    //m.head = n.head.next;
+                    
+                }
+                else
+                {
+                    
+                    MoveNode(k,n);
+                    //n.head = n.head.next;
+                    
+                }
+            }
+        }
+        k.print(); 
+        
+        
+    }
+    
+            
+    public static void main(String[] args) {
+        LinkedList l = new LinkedList();
+        l.insertAtEnd(1);
+        l.insertAtEnd(2);
+        l.insertAtEnd(11);
+        l.insertAtEnd(12);
+        LinkedList m = new LinkedList();
+        m.insertAtEnd(3);
+        m.insertAtEnd(5);
+        m.insertAtEnd(6);
+        
+//        l.push(1);
+//        l.pop();
+      //  l.pop();
+      //  l.print();
+      //  l.frontBackSplit();
+        
+       // m.MoveNode(l, m);
+       // l.shuffleMerge(l, m);
+      //  l.print();
+      //  System.out.println("Second");
+      //  m.print();
+        l.ShuffleList(l, m);
+        
+    }
+    
+}
+//
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package linkedlist;
+
+/**
+ *
+ * @author tviswan1
+ */
+public class Node {
+    int value;
+    Node next;
+    
+}
