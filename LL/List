@@ -69,7 +69,7 @@ public class LinkedList {
         }
     }
     
-    public void frontBackSplit()
+    public LinkedList frontBackSplit()
     {
         Node temp = head;
         Node temp2 = head;
@@ -86,9 +86,7 @@ public class LinkedList {
         LinkedList second = new LinkedList();
         second.head = temp.next;
         temp.next = null;
-        print();
-        System.out.println("second list");
-        second.print();
+        return second;
                        
     }
     
@@ -144,7 +142,44 @@ public class LinkedList {
         
     }
     
-    
+    public LinkedList AltList(LinkedList m, LinkedList n)
+    {
+        LinkedList k = new LinkedList();
+       int count = 0;
+       while(m.head!=null || n.head!=null)
+        {
+            if(m.head==null)
+            {
+                MoveNode(k,n);
+                
+            }
+            else if(n.head==null)
+            {
+                MoveNode(k,m);
+                //m.head = n.head.next;
+            }
+            else
+            {
+                if(count%2==0)
+                {
+                    
+                    MoveNode(k,m);
+                    count++;
+                    
+                }
+                else
+                {
+                    
+                    MoveNode(k,n);
+                    count++;
+                    
+                }
+            }
+        }
+        
+        return k;
+        
+    }
             
     public void ShuffleList(LinkedList m, LinkedList n)
     {
@@ -181,18 +216,50 @@ public class LinkedList {
                 }
             }
         }
-        k.print(); 
-        
-        
+        //k.print(); 
+               
     }
     
+    public void Reverse(Node h)
+    {
+        if(h==null)
+        {
+            return;
+        }
+        else if(h.next == null)
+        {
+            this.head = h;
+        }
+        else 
+        {
+            Reverse(h.next);
+            Node temp1 = h;
+            Node temp2 = h.next;
+            temp2.next = temp1;
+            temp1.next = null;
+            
+            
+        }
+    }
+    
+    public void Rearrange()
+    {
+        
+        LinkedList k = frontBackSplit();
+        LinkedList l = this;
+        Reverse(k.head);
+       // LinkedList s = AltList(l,k);
+       // s.print();
+    }
             
     public static void main(String[] args) {
         LinkedList l = new LinkedList();
         l.insertAtEnd(1);
         l.insertAtEnd(2);
-        l.insertAtEnd(11);
-        l.insertAtEnd(12);
+        l.insertAtEnd(3);
+        l.insertAtEnd(4);
+        l.insertAtEnd(5);
+        l.insertAtEnd(6);
         LinkedList m = new LinkedList();
         m.insertAtEnd(3);
         m.insertAtEnd(5);
@@ -209,17 +276,20 @@ public class LinkedList {
       //  l.print();
       //  System.out.println("Second");
       //  m.print();
-        l.ShuffleList(l, m);
+     //   l.ShuffleList(l, m);
+//        l.Reverse(l.head);
+//        System.out.println("Reverse");
+        
+//        LinkedList k = l.AltList(l, m);
+//        
+//        k.Reverse(k.head);
+//        k.print();
+        l.Rearrange();
         
     }
     
 }
-//
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+//Node
 package linkedlist;
 
 /**
@@ -231,3 +301,4 @@ public class Node {
     Node next;
     
 }
+
