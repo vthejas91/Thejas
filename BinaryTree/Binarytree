@@ -1,0 +1,211 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package binarytree;
+
+/**
+ *
+ * @author tviswan1
+ */
+import java.util.*;
+public class BinaryTree {
+
+    public Node root;
+    static int successor = 0;
+   
+   public void insertNode(int val)
+   {
+        Node temp = new Node();
+        temp.createNode(val);
+        //System.out.println(root.value);
+       if(root == null)
+       {          
+           root =temp;
+           
+       }
+      
+       else
+       {
+        
+        Node parent = root;
+        while(true)
+        {
+            if(parent.left == null && parent.value> val)
+            {
+                
+                parent.left = temp;
+              
+                return;
+            }
+            else if(parent.right == null && parent.value<val)
+            {
+                
+                parent.right = temp;
+                return;
+            }
+            else if(parent.value > val)
+            {
+                
+                parent = parent.left;
+            }
+            else if(parent.value < val)
+            {
+                
+                parent = parent.right;
+            }
+        }
+           
+           
+       }
+   }
+   
+   public int findMin(Node temp)
+   {
+       if(temp.left==null)
+       {
+           return 0;
+       }
+       else
+       {
+           while(temp.left!=null);
+           {
+               temp = temp.left;
+           }
+           return temp.value;
+       }
+       
+   }
+   
+   public int height(Node focus)
+   {
+       if(focus==null)
+           return 0;
+       else
+       {
+           return 1+Math.max(height(focus.left), height(focus.right));
+       }
+   }
+   
+   
+   public void delete(int val)
+   {
+       Node temp = root;
+       if(root.value==val)
+       {
+           int min = findMin(temp.right);         
+           
+           root.value = min;          
+           
+       }      
+       
+   }
+   
+   
+   
+   public void inorder(Node focusNode)
+   {
+       // left,root , right
+       if(focusNode!=null)
+       {
+           inorder(focusNode.left);
+     System.out.print(focusNode.value+"  ");
+     inorder(focusNode.right);
+      
+       }
+      
+   }
+   public void preorder(Node focusNode)
+   {
+       // root, left,right
+        if(focusNode!=null)
+        {
+            System.out.println(focusNode.value);
+            inorder(focusNode.left);
+            inorder(focusNode.right);
+        }
+       
+   }
+   public void postorder(Node focusNode)
+   {
+       // left,right,root
+       if(focusNode!=null)
+       {
+           inorder(focusNode.left);
+       inorder(focusNode.right);
+       System.out.println(focusNode.value);
+       
+       }
+       
+   }
+   
+   public void morris(Node focusNode)
+   {
+       Node current = focusNode;
+       while(current!=null)
+       {
+           if(current.left==null)
+           {
+               System.out.println(current.value);
+               current = current.right;
+           }
+           else
+           {
+               Node pre = current.left;
+               while(pre.right!=null && pre.right!=current)
+               {
+                   pre = pre.right;
+               }
+               if(pre.right == null)
+               {
+                   pre.right = current;
+                   current = current.left;
+               }
+               else
+               {
+                   pre.right = null;
+                   System.out.println(current.value);
+                   current = current.right;
+               }
+               
+           }
+       }
+   }
+   
+    public static void main(String[] args) {
+        // TODO code application logic here
+         BinaryTree tree = new BinaryTree();
+        tree.insertNode(50);        
+        tree.insertNode(40);        
+        tree.insertNode(60);        
+        tree.insertNode(35);        
+        tree.insertNode(70);    
+       
+        tree.insertNode(37);         
+        tree.insertNode(56);        
+        tree.insertNode(90);
+      //  tree.morris(tree.root);
+       int n = tree.height(tree.root);
+        System.out.println(n);
+      //tree.inorder(tree.root);
+       
+       
+        
+    }
+    
+}
+//
+
+public class Node {
+    int value;
+    Node left;
+    Node right;
+    public void createNode(int val)
+    {
+        this.value = val;
+        this.left = null;
+        this.right = null;
+                
+    }
+}
