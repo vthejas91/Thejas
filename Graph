@@ -1,55 +1,44 @@
-
-public class Graph {
-    int   adjmatrix[][];
-    int      rootNode = 0;
-    int      NNodes;
-    boolean visited[];
-   
-    public Graph(int n)
-    {
-        adjmatrix = new int[n][n];
-        NNodes = n;
-        visited = new boolean[n];
-    }
-    public Graph(int[][] mat)
-    {
-        int i,j;
-        NNodes = mat.length;
-        adjmatrix = new int[NNodes][NNodes];
-        visited = new boolean[NNodes];
-        
-        for(i=0;i<NNodes;i++)
-        {
-            for(j=0;j<NNodes;j++)
-            {
-                adjmatrix[i][j]=mat[i][j];
-            }
-        }
-        
-    }      
+public class Graph {   
     
-   public void DFS(int i)
-   {
-       visited[i]=true;
-       System.out.println(i);
-       for(int j=0;j<NNodes;j++)
-       {
-           if(adjmatrix[i][j]!=0 && visited[j]!=true)
-           {
-               DFS(j);
-           }
-           
-       }
-             
-   }
- 
-   public void clearVisited()
-   {
-      int i;
-
-      for (i = 0; i < visited.length; i++)
-         visited[i] = false;
-   }
-   
+    
+    public List<Integer> adj[];
+    
+    public Graph(int ver)
+    {
+        adj = new LinkedList[ver];
+        for(int i = 0;i<ver;i++)
+        {
+            adj[i] = new LinkedList();
+        }
+    }
+    
+    public void addEdge(int i,int j)
+    {
+        adj[i].add(j);
+    }
+    
+    public void print(int k)
+    {
+        List l = adj[k];
+        for(int i=0;i<l.size();i++)
+        {
+            System.out.println(l.get(i));
+        }
+    }
+    
+    public static void main(String[] args) {
+     
+        Graph g = new Graph(4);
+        g.addEdge(0, 1);
+        g.addEdge(0, 2);
+        g.addEdge(1, 2);
+        g.addEdge(2, 0);
+        g.addEdge(2, 3);
+        g.addEdge(3, 3);
+        
+        g.print(2);
+        
+    }
     
 }
+
